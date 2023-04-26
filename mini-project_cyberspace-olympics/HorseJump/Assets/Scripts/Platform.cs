@@ -1,10 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
     public float jumpForce = 10f;
+    public PlayerScore playerScore;
+
+    private bool tagged;
+
+    private void Start()
+    {
+        tagged = false;
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -17,6 +23,11 @@ public class Platform : MonoBehaviour
                 velocity.y = jumpForce;
                 rb.velocity = velocity;
                 gameObject.GetComponent<AudioSource>().Play();
+                if (!tagged)
+                {
+                    playerScore.addScore();
+                    tagged = true;
+                }
             }
         }
     }
